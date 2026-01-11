@@ -67,3 +67,5 @@ Matching Score = (Skill Match × 0.6) + (Experience Match × 0.3) + (Availabilit
 📌 Outcome
 
 TalentBridge improves project staffing accuracy, reduces skill mismatch, and enhances project delivery efficiency through intelligent automation and managerial control.
+
+- Author : Yash Naik
