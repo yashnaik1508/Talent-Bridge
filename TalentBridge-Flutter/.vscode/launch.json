@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "talentbridge_flutter (Chrome)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--web-port",
+                "5000"
+            ]
+        },
+        {
+            "name": "talentbridge_flutter (Edge)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--device-id",
+                "edge",
+                "--web-port",
+                "5000"
+            ]
+        }
+    ]
+}
