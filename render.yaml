@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: talentbridge-backend
-    env: docker
-    rootDir: TalentBridge-Backend
-    dockerfilePath: ./Dockerfile
-    plan: free
