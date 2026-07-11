@@ -1,8 +1,7 @@
 services:
   - type: web
     name: talentbridge-backend
-    env: java
+    env: docker
     rootDir: TalentBridge-Backend
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/talentbridge-backend-1.0.0.jar
+    dockerfilePath: ./Dockerfile
     plan: free
