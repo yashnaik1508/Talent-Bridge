@@ -21,8 +21,23 @@ export default function AddEmployee() {
   const [submitting, setSubmitting] = useState(false);
 
   const onChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (e.target.name === "phone") {
+      const val = e.target.value.replace(/\D/g, "");
+      if (val.length <= 10) {
+        setForm((prev) => ({ ...prev, phone: val }));
+      }
+    } else {
+      setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
   };
+
+  const handlePhoneBlur = () => {
+    if (form.phone && form.phone.length < 10) {
+      addToast("Invalid phone number", "error");
+    }
+  };
+
+  const isFormValid = form.fullName && form.email && form.password && form.phone && form.phone.length === 10;
 
   const handleRoleChange = (val) => {
     setForm((prev) => ({ ...prev, role: val }));
@@ -32,8 +47,14 @@ export default function AddEmployee() {
     e.preventDefault();
     setSubmitting(true);
 
-    if (!form.fullName || !form.email || !form.password) {
-      addToast("Full Name, Email and Password are required.", "warning");
+    if (!form.fullName || !form.email || !form.password || !form.phone) {
+      addToast("All fields are required.", "warning");
+      setSubmitting(false);
+      return;
+    }
+
+    if (form.phone.length !== 10) {
+      addToast("Invalid phone number", "error");
       setSubmitting(false);
       return;
     }
@@ -113,8 +134,10 @@ export default function AddEmployee() {
                   name="phone"
                   value={form.phone}
                   onChange={onChange}
+                  onBlur={handlePhoneBlur}
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 dark:text-white placeholder-slate-400"
-                  placeholder="+1 234 567 890"
+                  placeholder="1234567890"
+                  required
                 />
               </div>
             </div>
@@ -160,8 +183,8 @@ export default function AddEmployee() {
 
             <button
               type="submit"
-              disabled={submitting}
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-70 transition-all hover:-translate-y-0.5"
+              disabled={submitting || !isFormValid}
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 transition-all hover:-translate-y-0.5"
             >
               <UserPlus size={18} />
               {submitting ? "Adding..." : "Add Employee"}
