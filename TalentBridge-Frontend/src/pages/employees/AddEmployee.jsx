@@ -19,8 +19,10 @@ export default function AddEmployee() {
   });
 
   const [submitting, setSubmitting] = useState(false);
+  const [duplicateError, setDuplicateError] = useState(false);
 
   const onChange = (e) => {
+    if (duplicateError) setDuplicateError(false);
     if (e.target.name === "phone") {
       const val = e.target.value.replace(/\D/g, "");
       if (val.length <= 10) {
@@ -78,7 +80,13 @@ export default function AddEmployee() {
         err?.response?.data?.message ||
         err?.message ||
         "Failed to register user. Try again.";
-      addToast(msg, "error");
+      
+      if (msg === "Email already registered") {
+        setDuplicateError(true);
+        addToast("Employee already exists!", "warning");
+      } else {
+        addToast(msg, "error");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -93,6 +101,18 @@ export default function AddEmployee() {
 
       <div className="glass-panel p-8 rounded-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
+
+          {duplicateError && (
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex items-center gap-3 text-amber-500">
+              <div className="bg-amber-500/20 p-2 rounded-lg">
+                <User size={20} />
+              </div>
+              <div>
+                <h4 className="font-bold text-sm">Employee Already Exists</h4>
+                <p className="text-xs opacity-90 text-amber-200">An account with this email address is already registered in the system.</p>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
