@@ -1,7 +1,7 @@
 services:
   - type: web
     name: talentbridge-backend
-    runtime: java
+    env: java
     rootDir: TalentBridge-Backend
     buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -jar target/talentbridge-backend-1.0.0.jar
